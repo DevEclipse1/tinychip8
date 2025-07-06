@@ -21,4 +21,6 @@ void initialize_tc8()
 
 while (running) {
   emulator.cycle(&emulator);
-}```
+}
+
+...
