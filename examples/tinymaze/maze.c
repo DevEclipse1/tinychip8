@@ -42,8 +42,12 @@ int main(int argc, char* argv[])
     // bind all the functions, unless nothing will work
     tinychip8_bind(&tc8);
     tc8.init(&tc8);
-    
-    // the font is automaticly loaded in the init function
+
+    // load the font
+    for (int i = 0; i < 80; ++i)
+      tc8.memory[0x050 + i] = tinychip8_font[i];
+  
+    // load the ROM, MUST BE AT ADDRESS 0x200
     for (int i = 0; i < rombytes; ++i) {
         tc8.memory[0x200 + i] = rom[i];
     }
