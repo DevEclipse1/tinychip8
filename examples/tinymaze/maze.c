@@ -36,8 +36,10 @@ void myplotpixel(struct tinychip8* self, tc8_8bit x, tc8_8bit y)
 
 int main(int argc, char* argv[])
 {
+    // setting the seed is important if you want it to always be (pseudo)random
     srand(time(NULL));
 
+    // bind all the functions, unless nothing will work
     tinychip8_bind(&tc8);
     tc8.init(&tc8);
     
@@ -46,13 +48,15 @@ int main(int argc, char* argv[])
         tc8.memory[0x200 + i] = rom[i];
     }
 
+    // these 2 functions are important if you actually want to draw something on the screen
     tc8.clear_screen = myclearscreen;
     tc8.plot_pixel = myplotpixel;
 
+    // run it all in a loop, you can always check if the rom is at the end, but for this example, this works
     while (1)
     {
         tc8.clear_screen(&tc8);
-        tc8.cycle(&tc8);
+        tc8.cycle(&tc8); // cycle is very important, unless it will just be stuck at the beginning and wont execute anything
     }
 
     return 0;
